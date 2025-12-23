@@ -37,6 +37,7 @@ def calculate_operation(operation, num1, num2=0):
             return factorial(num1)
 
 
+
 def factorial(num):
     if num == 0:
         return 1

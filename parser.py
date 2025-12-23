@@ -1,4 +1,4 @@
-from exceptions import catch_exceptions, NoCloseBracketException
+from exceptions import catch_exceptions, NoCloseBracketException, EmptyExpressionException
 from operations import power_map, calculate_operation
 
 
@@ -58,6 +58,7 @@ def find_number(expression, index=0):
             end_index += 1
 
     # מחזיר את המספר, מטפל בשליליות וחיוביות ומחזיר את האינדקס הבא בביטוי המתמטי
+    #מחזיר את האינדקס של התו הבא בביטוי המתמטי כדי להמשיך לפתור את התרגיל
     return (number, end_index) if minus_counter % 2 == 0 else (number * (-1), end_index)
 
 
@@ -88,10 +89,20 @@ def calc_mat(mat, num, operand=None):
         insert_to_mat(mat, num, operand)
 
 
+
+#הפעולה מקבלת ביטוי ומחשבת את התוצאה
+# דרכי הפעולה של הפונקציה:
+#היא מחפשת את המספר ואת פעולת החשבון הבאים - זוג, ובכל פעם מנסה להכניס אום ל"מטריצה"
+#כל זוג כזה נכנס למטריצה למערך של רמת החוזקה של הפעולה שלו
+#כך ש+1 יכנס במקום ה0 במטריצה אבל @3 יכנס במקום ה4 במטריצה
+#אם במטריצה קיים זוג חזק יותר, המטריצה מחשבת את התוצאה בין המספר שקיים במטריצה, פעולת החשבון החזקה יותר והמספר החדש
+#ומכניסה למטריצה את התוצאה ואת הפעולת חשבון החלשה יותר
+#לכל ביטוי נוסיף +0 בסוף הביטוי, כל שהוא לא משפיע על התוצאה הסופית אבל מאפשר לנו לצמצם את המטריצה בגלל ש+ נמצא ברמת חוזקה הקטנה ביותר
+#ובכך נוכל להגיד שתמיד התוצאה של הביטוי כולו הוא המקום ה0 0 במטריצה בסוף החישוב
 def calc(expression):
+    #אם הביטוי ריק מעלה שגיאה מתאימה
     if len(expression) == 0:
-        print("the expression must not be empty")
-        return None
+        raise EmptyExpressionException()
 
     expression += '+0'
 
@@ -106,8 +117,10 @@ def calc(expression):
     index = 0
 
     try:
+        #מקבל את המספר הראשון בביטוי ואת האינדקס של האופרטור שאחריו
         num, index = find_number(expression, index)
         while index < len(expression):
+            #מקבל את האופרטור שאחרי המספר
             op = expression[index]
 
             #מטפל במקרים שלא צויינה פעולת חשבון לפני הסוגריים (כפל) לדוגמה (2+1)2
@@ -115,11 +128,14 @@ def calc(expression):
                 op = '*'
                 index -= 1
 
+            #מכניס את המספר והאופרטור למטרציה ומבצע חישוב במטריצה
             calc_mat(mat, num, op)
-            check_mat(mat, op)
-            index += 1
-            num, index = find_number(expression, index)
 
+            #מגדיל את האינדקס באחד כי אנחנו כרגע נמצאים על האינדקס של האופרטור ואנחנו רוצים לעבור לתחילת המספר הבא
+            index += 1
+            # מקבל את המספר הבא בביטוי ואת האינדקס של האופרטור שאחריו
+            num, index = find_number(expression, index)
+    #טיפול בשגיאות
     except Exception as e:
         print(catch_exceptions(e, index))
         raise e
