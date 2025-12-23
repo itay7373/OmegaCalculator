@@ -15,20 +15,42 @@ def find_number(expression, index=0):
         minus_counter += 1
         start_index += 1
 
-    end_index = start_index
-    dot_counter = 0
 
-    #רץ כל עוד לא הגענו לסוף הביטוי המתמטי וכל עוד התו הוא מספר או נקודה
-    while end_index < len(expression) and (expression[end_index].isnumeric() or expression[end_index] == '.'):
-        if expression[end_index] == '.':
-            dot_counter += 1
-            # אם יש יותר מנקודה אחת במספר עוצר - לא תקין
-            if dot_counter > 1:
+    if start_index < len(expression) and expression[start_index] == '(':
+        balance = 1
+        end_index = start_index + 1
+        while end_index < len(expression):
+            if expression[end_index] == '(':
+                balance += 1
+            elif expression[end_index] == ')':
+                balance -= 1
+            if balance == 0:
                 break
+            end_index += 1
+        number = calc(expression[start_index + 1:end_index])
         end_index += 1
 
-    #הופך את המחרוזת למספר
-    number = float(expression[start_index: end_index])
+    else:
+        end_index = start_index
+        dot_counter = 0
+
+        #רץ כל עוד לא הגענו לסוף הביטוי המתמטי וכל עוד התו הוא מספר או נקודה
+        while end_index < len(expression) and (expression[end_index].isnumeric() or expression[end_index] == '.'):
+            if expression[end_index] == '.':
+                dot_counter += 1
+                # אם יש יותר מנקודה אחת במספר עוצר - לא תקין
+                if dot_counter > 1:
+                    break
+            end_index += 1
+
+        #הופך את המחרוזת למספר
+        number = float(expression[start_index: end_index])
+
+    #מטפל במספר שהוא עצרת
+    if end_index < len(expression):
+        if expression[end_index] == '!':
+            number = calculate_operation('!', number)
+            end_index += 1
 
     #מחזיר את המספר, מטפל בשליליות וחיוביות ומחזיר את האינדקס הבא בביטוי המתמטי
     return (number, end_index) if minus_counter % 2 == 0 else (number * (-1), end_index)
@@ -78,6 +100,11 @@ def calc(expression):
 
   while index < len(expression):
     op = expression[index]
+
+    if op == '(':
+        op = '*'
+        index -= 1
+
     calc_mat(mat, num, op)
     check_mat(mat,op)
     index += 1
