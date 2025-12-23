@@ -12,3 +12,9 @@ class NoCloseBracketException(Exception):
         super().__init__()
     def __str__(self):
         return "Missing closing parenthesis!"
+
+class EmptyExpressionException(Exception):
+    def __init__(self):
+        super().__init__()
+    def __str__(self):
+        return "the expression can not be empty!"
