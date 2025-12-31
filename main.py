@@ -1,11 +1,9 @@
-from parser import calc
+from parser import calc, preparing_expression
 
 expression = input("Enter your expression (enter EXIT to exit): ")
 
 while expression.upper() != "EXIT":
     try:
-        # מוריד תווים לבנים מהביטוי שהתקבל
-        expression = "".join(expression.split())
         print(f"\nthe answer is: {calc(expression)}\n---------------------------")
     except Exception as e:
         print(f'Error: {e}\n---------------------------\n')

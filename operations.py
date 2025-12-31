@@ -1,4 +1,6 @@
 # מפה שנותנת לכל אופרטור את עוצמת הקדימות שלו
+from exceptions import NegativeSumDigitsException, NegativeFactorialException
+
 power_map = {
     '+': 0,
     '-': 0,
@@ -35,11 +37,24 @@ def calculate_operation(operation, num1, num2=0):
             return (num1 + num2) / 2
         case '!':
             return factorial(num1)
-
+        case '#':
+            return sum_digits(num1)
 
 
 def factorial(num):
+    if num < 0:
+        raise NegativeFactorialException()
     if num == 0:
         return 1
     else:
         return num * factorial(num - 1)
+
+
+def sum_digits(num):
+    if num < 0:
+        raise NegativeSumDigitsException()
+    sum = 0.0
+    for number in str(num):
+        if number.isnumeric():
+            sum += float(number)
+    return sum

@@ -18,3 +18,15 @@ class EmptyExpressionException(Exception):
         super().__init__()
     def __str__(self):
         return "the expression can not be empty!"
+
+class NegativeSumDigitsException(Exception):
+    def __init__(self):
+        super().__init__()
+    def __str__(self):
+        return "can not sum the digits of negative numbers!"
+
+class NegativeFactorialException(Exception):
+    def __init__(self):
+        super().__init__()
+    def __str__(self):
+        return "can not factorial a negative numbers!"
