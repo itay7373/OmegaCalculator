@@ -3,7 +3,7 @@ First Omega project - A sophisticated calculator.
 
 ## Instructions
 1. Download the project folder and open it in PyCharm.
-2. Ensure you have **Python 3.13** installed on your computer.
+2. Ensure you have Python installed on your computer.
 3. Locate the `main.py` file and run the project.
 
 **Usage:**
