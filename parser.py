@@ -51,6 +51,7 @@ def find_number(expression, index=0):
         # הופך את המחרוזת למספר
         number = float(expression[start_index: end_index])
 
+    #אם מסםר המינוסים אי-זוגי המספר שלילי אחרת חיובי
     number = number if minus_counter % 2 == 0 else -number
 
     # מטפל במספר שהוא עצרת
@@ -96,17 +97,18 @@ def calc_mat(mat, num, operand=None):
 
 
 def preparing_expression(expression):
+    #מוסיף פלוס אפס לסוף הביטוי כדי לסיים את חישוב המטריצה ולהבטיח שהתשובה בסוף תיהיה במקום 0 0 במטריצה
     expression += '+0'
     # מוריד תווים לבנים מהביטוי שהתקבל
     expression = "".join(expression.split())
 
     minus_counter = 0
     index = 0
-
+    #מחשב כמה מינוסים יש לפני הביטוי
     while expression[index] == '-':
         minus_counter += 1
         index += 1
-
+    #במידת הצורך מוסיף 0 לפני הביטוי אם מספר המינוסים אי זוגי, כדי להבטיח חישוב נכון של מינוסים שבאים בתחילת הביטוי לפי הקדימות
     if minus_counter % 2 == 1:
         expression = '0' + expression
 

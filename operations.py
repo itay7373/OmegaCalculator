@@ -1,5 +1,5 @@
 # מפה שנותנת לכל אופרטור את עוצמת הקדימות שלו
-from exceptions import NegativeSumDigitsException, NegativeFactorialException
+from exceptions import NegativeSumDigitsException, NegativeFactorialException, DecimalFactorialException
 
 power_map = {
     '+': 0,
@@ -42,6 +42,8 @@ def calculate_operation(operation, num1, num2=0):
 
 
 def factorial(num):
+    if num % 1 != 0:
+        raise DecimalFactorialException()
     if num < 0:
         raise NegativeFactorialException()
     if num == 0:

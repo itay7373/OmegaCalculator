@@ -29,4 +29,10 @@ class NegativeFactorialException(Exception):
     def __init__(self):
         super().__init__()
     def __str__(self):
-        return "can not factorial a negative numbers!"
+        return "can not calculate a factorial of a negative numbers!"
+
+class DecimalFactorialException(Exception):
+    def __init__(self):
+        super().__init__()
+    def __str__(self):
+        return "can not calculate a factorial of a decimal numbers!"
