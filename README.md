@@ -23,8 +23,12 @@ To quit the program, type `exit` (case insensitive).
 * `!` : Factorial (e.g., 5!=120)
 * `#` : Sum of digits (e.g., 12#=3)
 
+
 **Error Handling:**
 If the calculator cannot process an expression (invalid syntax or math error), it will catch the exception and allow you to enter a new expression without crashing.
+
+> **Note:** For detailed explanations of the functions and logic, please refer to the documentation inside the code.
+
 
 ## Built With
 * Python 3.13
